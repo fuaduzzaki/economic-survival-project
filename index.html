@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistance Finance Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Onboarding Screens -->
+    <div id="onboarding">
+        <div id="welcome-screen" class="onboarding-section section active">
+            <div class="flex flex-col items-center justify-center text-center p-8 text-white h-full">
+                <span class="text-7xl mb-6">💡</span>
+                <h1 class="text-4xl font-bold mb-4">Welcome to Assistance Finance</h1>
+                <p class="text-lg text-indigo-200 max-w-md">Your AI companion that helps you manage money smartly and save more every month.</p>
+                <div class="mt-12">
+                    <button onclick="nextOnboarding('track-screen')" class="bg-white text-indigo-600 font-semibold py-3 px-12 rounded-lg shadow-lg">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="track-screen" class="onboarding-section section">
+             <div class="flex flex-col items-center justify-center text-center p-8 text-white h-full">
+                <span class="text-7xl mb-6">📊</span>
+                <h1 class="text-4xl font-bold mb-4">Track and Learn</h1>
+                <p class="text-lg text-indigo-200 max-w-md">Record your daily expenses, understand your spending habits, and receive smart insights.</p>
+                <div class="mt-12">
+                     <button onclick="nextOnboarding('save-screen')" class="bg-white text-indigo-600 font-semibold py-3 px-12 rounded-lg shadow-lg">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="save-screen" class="onboarding-section section">
+            <div class="flex flex-col items-center justify-center text-center p-8 text-white h-full">
+                <span class="text-7xl mb-6">🎁</span>
+                <h1 class="text-4xl font-bold mb-4">Save, Earn, and Get Rewards</h1>
+                <p class="text-lg text-green-200 max-w-md">Stay within your budget, earn points, and redeem them for real vouchers and discounts.</p>
+                <div class="mt-12">
+                    <button onclick="nextOnboarding('login-screen')" class="bg-white text-green-600 font-semibold py-3 px-12 rounded-lg shadow-lg">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="login-screen" class="onboarding-section section">
+            <div class="flex flex-col items-center justify-center text-center p-8 text-white h-full">
+                <span class="text-7xl mb-6">👤</span>
+                <h1 class="text-4xl font-bold mb-4">Login to Your Account</h1>
+                <p class="text-lg text-green-200 max-w-md mb-8">Access your financial dashboard securely.</p>
+                <div class="w-full max-w-sm">
+                    <form class="space-y-4" onsubmit="event.preventDefault(); showApp();">
+                        <div>
+                            <input type="email" placeholder="Email Address" required class="w-full px-4 py-3 text-gray-800 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
+                        </div>
+                        <div>
+                            <input type="password" placeholder="Password" required class="w-full px-4 py-3 text-gray-800 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
+                        </div>
+                        <div class="pt-4">
+                             <button type="submit" class="w-full bg-white text-green-600 font-semibold py-3 px-12 rounded-lg shadow-lg">Login & Get Started</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app" class="hidden min-h-screen p-4 sm:p-6 lg:p-8 flex items-center justify-center">
+        <div class="max-w-4xl mx-auto w-full">
+            
+            <!-- Header -->
+            <header class="flex justify-between items-start mb-6">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Assistance Finance</h1>
+                    <p class="text-gray-500">Smart guidance for every student's money</p>
+                </div>
+                <div class="text-right flex-shrink-0">
+                    <p class="text-sm text-gray-600">Hello, Fajar</p>
+                    <p class="font-bold text-lg text-gray-900">Balance: Rp 200,000</p>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                
+                <!-- Navigation -->
+                <nav id="main-nav" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8">
+                    <button data-target="dashboard" class="nav-button active text-sm sm:text-base font-semibold py-3 px-4 rounded-lg bg-gray-100 text-gray-700 transition-all duration-200">Dashboard</button>
+                    <button data-target="add-expense" class="nav-button text-sm sm:text-base font-semibold py-3 px-4 rounded-lg bg-gray-100 text-gray-700 transition-all duration-200">Add Expense</button>
+                    <button data-target="ai-assistant" class="nav-button text-sm sm:text-base font-semibold py-3 px-4 rounded-lg bg-gray-100 text-gray-700 transition-all duration-200">AI Assistant</button>
+                    <button data-target="rewards" class="nav-button text-sm sm:text-base font-semibold py-3 px-4 rounded-lg bg-gray-100 text-gray-700 transition-all duration-200">Rewards</button>
+                </nav>
+
+                <!-- Dynamic Content Sections -->
+                <div id="app-content">
+                    <!-- Dashboard Section -->
+                    <section id="dashboard" class="app-section active">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h2 class="text-xl font-bold">Dashboard</h2>
+                                <p class="text-gray-500">Monthly overview & insights</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-500">Spent this month</p>
+                                <p class="text-xl font-bold text-red-500">Rp 120,000</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-gray-50 p-6 rounded-xl">
+                                <p class="text-sm text-gray-500">Balance Left</p>
+                                <p class="text-3xl font-bold text-green-600">Rp 80,000</p>
+                                <p class="text-xs text-gray-400 mt-1">Budget left for the month</p>
+                            </div>
+                             <div class="bg-gray-50 p-6 rounded-xl">
+                                <p class="text-sm text-gray-500">Points</p>
+                                <p class="text-3xl font-bold text-indigo-600">120</p>
+                                <p class="text-xs text-gray-400 mt-1">Redeem for vouchers</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold mb-4">Recent Transactions</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-semibold">Lunch</p>
+                                        <p class="text-sm text-gray-400">Food • 2025-09-28</p>
+                                    </div>
+                                    <p class="font-semibold">Rp 25,000</p>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-semibold">Coffee</p>
+                                        <p class="text-sm text-gray-400">Wants • 2025-09-27</p>
+                                    </div>
+                                    <p class="font-semibold">Rp 15,000</p>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-semibold">Books</p>
+                                        <p class="text-sm text-gray-400">Needs • 2025-09-20</p>
+                                    </div>
+                                    <p class="font-semibold">Rp 80,000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Add Expense Section -->
+                    <section id="add-expense" class="app-section">
+                        <h2 class="text-xl font-bold mb-4">Add Expense</h2>
+                        <form class="space-y-6">
+                            <div>
+                                <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                                <input type="text" id="title" placeholder="e.g., Lunch" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                             <div>
+                                <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                                <select id="category" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                    <option>Food</option>
+                                    <option>Transport</option>
+                                    <option>Entertainment</option>
+                                    <option>Needs</option>
+                                    <option>Wants</option>
+                                </select>
+                            </div>
+                             <div>
+                                <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+                                <input type="number" id="amount" placeholder="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            </div>
+                            <div class="flex items-center space-x-4">
+                               <button type="submit" class="w-full sm:w-auto inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add</button>
+                               <p class="text-sm text-gray-500">Daily limit: Rp 50,000</p>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- AI Assistant Section -->
+                    <section id="ai-assistant" class="app-section">
+                        <h2 class="text-xl font-bold mb-4">AI Assistant</h2>
+                        <div class="space-y-6">
+                           <div class="bg-gray-50 p-6 rounded-xl">
+                               <h3 class="font-semibold text-gray-800 mb-2">Insights based on your spending</h3>
+                               <p class="text-green-700">Good job — your spending looks balanced!</p>
+                           </div>
+                           <div class="bg-gray-50 p-6 rounded-xl">
+                               <h3 class="font-semibold text-gray-800 mb-2">Personal suggestion</h3>
+                               <p class="text-gray-600">Try setting a weekly food budget and cook twice a week — you could save up to Rp 100,000 a month.</p>
+                           </div>
+                        </div>
+                    </section>
+
+                    <!-- Rewards Section -->
+                    <section id="rewards" class="app-section">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-bold">Rewards</h2>
+                            <p class="text-sm text-gray-500">Points: <span class="font-bold text-indigo-600">120</span></p>
+                        </div>
+                         <div class="space-y-4">
+                            <div class="bg-gray-50 p-4 rounded-xl flex justify-between items-center">
+                                <div>
+                                    <p class="font-semibold">Rp 20.000 off at Campus Cafe</p>
+                                    <p class="text-sm text-gray-500">Cost: 100 pts</p>
+                                </div>
+                                <button class="bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg text-sm">Redeem</button>
+                            </div>
+                             <div class="bg-gray-50 p-4 rounded-xl flex justify-between items-center">
+                                <div>
+                                    <p class="font-semibold">10% off Bookstore</p>
+                                    <p class="text-sm text-gray-500">Cost: 80 pts</p>
+                                </div>
+                                <button class="bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg text-sm">Redeem</button>
+                            </div>
+                             <div class="bg-gray-50 p-4 rounded-xl flex justify-between items-center">
+                                <div>
+                                    <p class="font-semibold">Free Delivery Voucher</p>
+                                    <p class="text-sm text-gray-500">Cost: 60 pts</p>
+                                </div>
+                                <button class="bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg text-sm">Redeem</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+            <footer class="text-center mt-8">
+                <p class="text-xs text-gray-400">Prototype • Not for production</p>
+            </footer>
+        </div>
+    </div>
+    
+    <script>
+        // --- Feather Icons ---
+        feather.replace();
+
+        // --- Onboarding Logic ---
+        function nextOnboarding(nextScreenId) {
+            const currentScreen = document.querySelector('#onboarding .section.active');
+            const nextScreen = document.getElementById(nextScreenId);
+            
+            if (currentScreen) {
+                currentScreen.classList.remove('active');
+            }
+            if (nextScreen) {
+                nextScreen.classList.add('active');
+            }
+        }
+
+        function showApp() {
+            document.getElementById('onboarding').style.display = 'none';
+            document.getElementById('app').classList.remove('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling for the app
+        }
+
+        // --- Main App Navigation Logic ---
+        const navContainer = document.getElementById('main-nav');
+        const navButtons = navContainer.querySelectorAll('.nav-button');
+        const appSections = document.querySelectorAll('.app-section');
+
+        navContainer.addEventListener('click', (e) => {
+            const targetButton = e.target.closest('.nav-button');
+            if (!targetButton) return;
+
+            const targetSectionId = targetButton.dataset.target;
+            const targetSection = document.getElementById(targetSectionId);
+
+            // Update button states
+            navButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            targetButton.classList.add('active');
+
+            // Update section visibility
+            appSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            targetSection.classList.add('active');
+        });
+
+    </script>
+</body>
+</html>
+

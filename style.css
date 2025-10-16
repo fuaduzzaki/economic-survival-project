@@ -1,0 +1,44 @@
+body {
+    font-family: 'Inter', sans-serif;
+    overflow: hidden; /* Prevent scrolling during onboarding */
+}
+
+.nav-button.active {
+    background-color: #6366F1; /* indigo-500 */
+    color: white;
+}
+
+/* Onboarding fullscreen styles */
+.onboarding-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.onboarding-section.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#welcome-screen, #track-screen {
+    background-color: #4F46E5;
+}
+
+#save-screen, #login-screen {
+    background-color: #10B981;
+}
+
+
+/* Main app section visibility */
+.app-section {
+    display: none;
+}
+.app-section.active {
+    display: block;
+}
+
