@@ -192,6 +192,23 @@
                                <h3 class="font-semibold text-gray-800 mb-2">Personal suggestion</h3>
                                <p class="text-gray-600">Try setting a weekly food budget and cook twice a week — you could save up to Rp 100,000 a month.</p>
                            </div>
+                           <div class="bg-gray-50 p-6 rounded-xl">
+                                <h3 class="font-semibold text-gray-800 mb-4">Ask Me Anything</h3>
+                                <div id="chat-history" class="h-48 overflow-y-auto mb-4 p-4 bg-white rounded-lg space-y-4">
+                                    <!-- Chat messages will appear here -->
+                                    <div class="flex justify-start">
+                                        <div class="bg-indigo-100 text-indigo-800 p-3 rounded-lg max-w-xs">
+                                            <p>Hello! How can I help you with your finances today?</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form id="ai-chat-form" class="flex gap-2">
+                                    <input type="text" id="chat-input" placeholder="Type your question..." class="flex-grow w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <button type="submit" class="inline-flex items-center justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Send
+                                    </button>
+                                </form>
+                           </div>
                         </div>
                     </section>
 
@@ -281,7 +298,44 @@
             targetSection.classList.add('active');
         });
 
+        // --- AI Chat Logic ---
+        const chatForm = document.getElementById('ai-chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatHistory = document.getElementById('chat-history');
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
+
+            // Display user message
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'flex justify-end';
+            userMessageDiv.innerHTML = `
+                <div class="bg-indigo-500 text-white p-3 rounded-lg max-w-xs">
+                    <p>${userMessage}</p>
+                </div>
+            `;
+            chatHistory.appendChild(userMessageDiv);
+
+            chatInput.value = '';
+            chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to bottom
+
+            // Simulate AI response
+            setTimeout(() => {
+                const aiResponse = "Based on your current spending, you could save an additional Rp 50,000 this month by reducing coffee purchases. Would you like me to set a reminder?";
+                const aiMessageDiv = document.createElement('div');
+                aiMessageDiv.className = 'flex justify-start';
+                aiMessageDiv.innerHTML = `
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs">
+                        <p>${aiResponse}</p>
+                    </div>
+                `;
+                chatHistory.appendChild(aiMessageDiv);
+                chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to bottom
+            }, 1000);
+        });
+
     </script>
 </body>
 </html>
-
